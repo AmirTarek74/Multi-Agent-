@@ -4,6 +4,8 @@ from langgraph.graph import StateGraph, MessagesState, START, END
 from langchain_core.messages import BaseMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from utils.supervisor import State
+from langsmith import Client
+
 from search.agents import *
 from write.agents import *
 import argparse
@@ -24,7 +26,8 @@ def main(question):
     langsmith_api_key = os.getenv("LANGSMITH_API_KEY")
     
     os.environ["LANGSMITH_TRACING"] = "true"
-    os.environ["LANGSMITH_PROJECT"] = "langchain-academy"
+    os.environ["LANGSMITH_PROJECT"] = "Multi-Agent-Project"
+    langsmith_client = Client()
     llm_name = "gemini-1.5-flash-8b"
     llm = ChatGoogleGenerativeAI(model=llm_name, api_key=google_api_key, verbose=False)
     
